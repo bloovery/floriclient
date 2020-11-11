@@ -2,6 +2,8 @@ import axios, { AxiosInstance,  } from 'axios';
 import { get } from 'lodash'
 import moment, { Moment } from 'moment'
 
+import { RequestParameters } from './interfaces'
+
 export default class ApiClient {
   private apiUrl: string;
   private apiVersion: string;
@@ -29,12 +31,24 @@ export default class ApiClient {
     return moment().isBefore(this.loginExpiresAt)
   }
 
-  async call (path: string, options?: object) {
+  async call (path: string, parameters?: RequestParameters) {
+    let params = {}
+    if (parameters) {
+      const { filter, select, top, skip, count } = parameters
+      params = {
+        $filter: filter,
+        $select: select,
+        $top: top,
+        $skip: skip,
+        $count: count
+      }
+    }
     try {
       if (!this.isLoggedIn) {
         await this.loginAction()
       }
       const { data } = await this.client.get(`${this.apiVersion}${path}`, {
+        params,
         headers: {
           Authorization: `Bearer ${this.authBearer}`
         }
