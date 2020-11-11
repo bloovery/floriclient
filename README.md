@@ -33,7 +33,7 @@ const product = await client.getProductById(20453)
 Latest update
 =============
 
-## Unreleased
+## [0.3.0] - 11/11/2020
 - Added `ProductGroup` class
 - Added product group fetch by ID
 - Added product translation fetch
