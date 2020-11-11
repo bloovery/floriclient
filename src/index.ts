@@ -13,7 +13,9 @@ export = class FloriClient {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
 
-    this.apiClient = new ApiClient(this.clientId, this.clientSecret);
+    ApiClient.clientId = clientId;
+    ApiClient.clientSecret = clientSecret;
+    this.apiClient = ApiClient.getInstance();
   }
 
   async getProductById (id: number): Promise<Product> {
