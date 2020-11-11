@@ -6,7 +6,6 @@
   "types": "dist/index.d.types",
   "author": "Bloovery srl <tech@bloovery.com>",
   "license": "UNLICENSED",
-  "private": true,
   "repository": "git://github.com:bloovery/floriclient.git",
   "scripts": {
     "build": "tsc"
