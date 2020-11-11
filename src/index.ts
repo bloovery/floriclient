@@ -1,5 +1,6 @@
 import ApiClient from './api.class'
 import Product from './models/product.class'
+import ProductGroup from './models/productGroup.class'
 
 export = class FloriClient {
   clientId: string;
@@ -32,6 +33,23 @@ export = class FloriClient {
         product.entry_date,
         product.change_date_time,
         product.expiry_date
+      )
+    }
+    return null
+  }
+
+  async getProductGroupById (id: number) {
+    const { value: groupResponse } = await this.apiClient.call('/VBN/ProductGroup', {
+      filter: `id eq ${id}`
+    })
+    if (groupResponse.length === 1) {
+      const group = groupResponse[0]
+      return new ProductGroup(
+        group.id,
+        group.description,
+        group.entry_date,
+        group.change_date_time,
+        group.expiry_date
       )
     }
     return null
