@@ -35,6 +35,9 @@ Latest update
 
 ## Unreleased
 - Added `ProductGroup` class
+- Added product group fetch by ID
+- Added product translation fetch
+- `ApiClient` is now a singleton
 
 ## [0.2.0] - 11/11/2020
 - Added product class

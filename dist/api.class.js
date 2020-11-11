@@ -20,11 +20,17 @@ class ApiClient {
         this.loginExpiresAt = moment_1.default().subtract(1, 'hour');
         this.apiUrl = 'https://api.floricode.com';
         this.apiVersion = 'v2';
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
+        this._clientId = clientId;
+        this._clientSecret = clientSecret;
         this.client = axios_1.default.create({
             baseURL: this.apiUrl
         });
+    }
+    static getInstance() {
+        if (!ApiClient.instance) {
+            ApiClient.instance = new ApiClient(this.clientId, this.clientSecret);
+        }
+        return ApiClient.instance;
     }
     get isLoggedIn() {
         return moment_1.default().isBefore(this.loginExpiresAt);
@@ -55,7 +61,7 @@ class ApiClient {
                 return data;
             }
             catch (error) {
-                console.log(error);
+                console.log(error.response.statusText);
             }
         });
     }
@@ -63,8 +69,8 @@ class ApiClient {
         return __awaiter(this, void 0, void 0, function* () {
             const loginData = {
                 grant_type: 'client_credentials',
-                client_id: this.clientId,
-                client_secret: this.clientSecret,
+                client_id: this._clientId,
+                client_secret: this._clientSecret,
                 scope: 'company%3Aread+companylevel%3Aread+companyrole%3Aread+location%3Aread+locationtype%3Aread+certificateorganisation%3Aread+certificatetype%3Aread+issuedcertificate%3Aread+certificatetypetofeaturevalue%3Aread'
             };
             const loginEncodedData = Object.keys(loginData).map(key => key + '=' + lodash_1.get(loginData, key)).join('&');
@@ -76,7 +82,7 @@ class ApiClient {
                 this.authBearer = access_token;
             }
             catch (error) {
-                console.log(error);
+                console.log(error.response.statusText);
             }
         });
     }

@@ -1,3 +1,5 @@
+import ApiClient from '../api.class'
+
 export default class Product {
   id: number;
   applicationId: number;
@@ -10,6 +12,8 @@ export default class Product {
   entryDate: Date;
   changeDateTitme: Date;
   expiryDate: Date;
+
+  apiClient: ApiClient
 
   constructor (
     id: number,
@@ -33,5 +37,17 @@ export default class Product {
       this.entryDate = entryDate;
       this.changeDateTitme = changeDateTitme;
       this.expiryDate = expiryDate;
+
+      this.apiClient = ApiClient.getInstance()
+  }
+
+  async getTranslation (languageCode: string) {
+    const { value: nameResponse } = await this.apiClient.call('/VBN/Name', {
+      filter: `name_type_id eq 1 and involved_code_list_id eq 1 and language_id eq '${languageCode}' and code_list_item_id eq '${this.id}'`
+    })
+    if (nameResponse.length === 1) {
+      return nameResponse[0].name_or_translation
+    }
+    return null
   }
 }

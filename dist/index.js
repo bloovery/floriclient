@@ -13,11 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 const api_class_1 = __importDefault(require("./api.class"));
 const product_class_1 = __importDefault(require("./models/product.class"));
+const productGroup_class_1 = __importDefault(require("./models/productGroup.class"));
 module.exports = class FloriClient {
     constructor(clientId, clientSecret) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
-        this.apiClient = new api_class_1.default(this.clientId, this.clientSecret);
+        api_class_1.default.clientId = clientId;
+        api_class_1.default.clientSecret = clientSecret;
+        this.apiClient = api_class_1.default.getInstance();
     }
     getProductById(id) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -27,6 +30,18 @@ module.exports = class FloriClient {
             if (productResponse.length === 1) {
                 const product = productResponse[0];
                 return new product_class_1.default(product.id, product.name, product.short_name, product.plant_registrator_id, product.plant_taxonomic_number, product.composite_indicator, product.product_group_id, product.entry_date, product.change_date_time, product.expiry_date);
+            }
+            return null;
+        });
+    }
+    getProductGroupById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { value: groupResponse } = yield this.apiClient.call('/VBN/ProductGroup', {
+                filter: `id eq ${id}`
+            });
+            if (groupResponse.length === 1) {
+                const group = groupResponse[0];
+                return new productGroup_class_1.default(group.id, group.description, group.entry_date, group.change_date_time, group.expiry_date);
             }
             return null;
         });
