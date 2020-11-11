@@ -1,5 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { Moment } from 'moment';
+import { RequestParameters } from './interfaces';
 export default class ApiClient {
     private apiUrl;
     private apiVersion;
@@ -10,6 +11,6 @@ export default class ApiClient {
     authBearer: string;
     constructor(clientId: string, clientSecret: string);
     get isLoggedIn(): boolean;
-    call(path: string, options?: object): Promise<any>;
+    call(path: string, parameters?: RequestParameters): Promise<any>;
     private loginAction;
 }

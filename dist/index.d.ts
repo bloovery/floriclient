@@ -1,4 +1,5 @@
 import ApiClient from './api.class';
+import Product from './models/product.class';
 declare const _default: {
     new (clientId: string, clientSecret: string): {
         clientId: string;
@@ -6,10 +7,7 @@ declare const _default: {
         apiUrl: string;
         apiVersion: string;
         apiClient: ApiClient;
-        /**
-         * Retrieve all products
-         */
-        getProducts(): Promise<any>;
+        getProductById(id: number): Promise<Product>;
     };
 };
 export = _default;

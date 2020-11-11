@@ -29,13 +29,25 @@ class ApiClient {
     get isLoggedIn() {
         return moment_1.default().isBefore(this.loginExpiresAt);
     }
-    call(path, options) {
+    call(path, parameters) {
         return __awaiter(this, void 0, void 0, function* () {
+            let params = {};
+            if (parameters) {
+                const { filter, select, top, skip, count } = parameters;
+                params = {
+                    $filter: filter,
+                    $select: select,
+                    $top: top,
+                    $skip: skip,
+                    $count: count
+                };
+            }
             try {
                 if (!this.isLoggedIn) {
                     yield this.loginAction();
                 }
                 const { data } = yield this.client.get(`${this.apiVersion}${path}`, {
+                    params,
                     headers: {
                         Authorization: `Bearer ${this.authBearer}`
                     }
