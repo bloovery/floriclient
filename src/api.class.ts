@@ -5,33 +5,45 @@ import moment, { Moment } from 'moment'
 import { RequestParameters } from './interfaces'
 
 export default class ApiClient {
+  private static instance: ApiClient;
+  public static clientId: string;
+  public static clientSecret: string;
+
+  private _clientId: string;
+  private _clientSecret: string;
+  
   private apiUrl: string;
   private apiVersion: string;
+  private client: AxiosInstance;
 
-  clientId: string;
-  clientSecret: string;
-  client: AxiosInstance;
+  private loginExpiresAt: Moment = moment().subtract(1, 'hour');
 
-  loginExpiresAt: Moment = moment().subtract(1, 'hour');
+  private authBearer: string;
 
-  authBearer: string;
-
-  constructor(clientId: string, clientSecret: string) {
+  private constructor(clientId: string, clientSecret: string) {
     this.apiUrl = 'https://api.floricode.com';
     this.apiVersion = 'v2';
 
-    this.clientId = clientId;
-    this.clientSecret = clientSecret;
+    this._clientId = clientId;
+    this._clientSecret = clientSecret;
+
     this.client = axios.create({
       baseURL: this.apiUrl
     })
+  }
+
+  public static getInstance (): ApiClient {
+    if (!ApiClient.instance) {
+      ApiClient.instance = new ApiClient(this.clientId, this.clientSecret)
+    }
+    return ApiClient.instance;
   }
 
   get isLoggedIn () {
     return moment().isBefore(this.loginExpiresAt)
   }
 
-  async call (path: string, parameters?: RequestParameters) {
+  public async call (path: string, parameters?: RequestParameters) {
     let params = {}
     if (parameters) {
       const { filter, select, top, skip, count } = parameters
@@ -55,15 +67,15 @@ export default class ApiClient {
       })
       return data
     } catch (error) {
-      console.log(error)
+      console.log(error.response.statusText)
     }
   }
 
   private async loginAction () {
     const loginData = {
       grant_type: 'client_credentials',
-      client_id: this.clientId,
-      client_secret: this.clientSecret,
+      client_id: this._clientId,
+      client_secret: this._clientSecret,
       scope: 'company%3Aread+companylevel%3Aread+companyrole%3Aread+location%3Aread+locationtype%3Aread+certificateorganisation%3Aread+certificatetype%3Aread+issuedcertificate%3Aread+certificatetypetofeaturevalue%3Aread'
     }
     const loginEncodedData = Object.keys(loginData).map(key => key + '=' + get(loginData, key)).join('&')
@@ -74,7 +86,7 @@ export default class ApiClient {
       this.loginExpiresAt = moment().add(expires_in, 'seconds')
       this.authBearer = access_token
     } catch (error) {
-      console.log(error)
+      console.log(error.response.statusText)
     }
   }
 }
