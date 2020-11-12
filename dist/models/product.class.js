@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const api_class_1 = __importDefault(require("../api.class"));
+const productGroup_class_1 = __importDefault(require("./productGroup.class"));
 class Product {
     constructor(id, name, shortName, plantRegistratorId, plantTaxonomicNumber, compositeIndicator, productGroupId, entryDate, changeDateTitme, expiryDate) {
         this.id = id;
@@ -36,6 +37,17 @@ class Product {
                 return nameResponse[0].name_or_translation;
             }
             return null;
+        });
+    }
+    getGroup() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { value: groupResponse } = yield this.apiClient.call('/VBN/ProductGroup', {
+                filter: `id eq ${this.productGroupId}`
+            });
+            if (groupResponse.length === 1) {
+                const group = groupResponse[0];
+                return new productGroup_class_1.default(group.id, group.description, group.entry_date, group.change_date_time, group.expiry_date);
+            }
         });
     }
 }

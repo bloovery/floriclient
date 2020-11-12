@@ -4,5 +4,7 @@ export default class ProductGroup {
     entryDate: Date;
     changeDateTime: Date;
     expiryDate: Date;
+    private apiClient;
     constructor(id: number, description: string, entryDate: Date, changeDateTime: Date, expiryDate: Date);
+    getTranslation(languageCode: string): Promise<string>;
 }
