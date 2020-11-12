@@ -25,7 +25,7 @@ export default class ProductGroup {
     this.apiClient = ApiClient.getInstance()
   }
 
-  async getTranslation (languageCode: string) {
+  async getTranslation (languageCode: string): Promise<string> {
     const { value: nameResponse } = await this.apiClient.call('/VBN/Name', {
       filter: `involved_code_list_id eq 16 and language_id eq '${languageCode}' and code_list_item_id eq '${this.id}'`
     })
