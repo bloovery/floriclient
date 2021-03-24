@@ -1,6 +1,6 @@
-import ApiClient from './api.class'
-import Product from './models/product.class'
-import ProductGroup from './models/productGroup.class'
+import ApiClient from './api.class';
+import Product from './models/product.class';
+import ProductGroup from './models/productGroup.class';
 
 export = class FloriClient {
   clientId: string;
@@ -18,12 +18,15 @@ export = class FloriClient {
     this.apiClient = ApiClient.getInstance();
   }
 
-  async getProductById (id: number): Promise<Product> {
-    const { value: productResponse } = await this.apiClient.call('/VBN/Product', {
-      filter: `id eq ${id}`
-    })
+  async getProductById(id: number): Promise<Product> {
+    const { value: productResponse } = await this.apiClient.call(
+      '/VBN/Product',
+      {
+        filter: `id eq ${id}`,
+      },
+    );
     if (productResponse.length === 1) {
-      const product = productResponse[0]
+      const product = productResponse[0];
       return new Product(
         product.id,
         product.name,
@@ -34,26 +37,29 @@ export = class FloriClient {
         product.product_group_id,
         product.entry_date,
         product.change_date_time,
-        product.expiry_date
-      )
+        product.expiry_date,
+      );
     }
-    return null
+    return null;
   }
 
-  async getProductGroupById (id: number) {
-    const { value: groupResponse } = await this.apiClient.call('/VBN/ProductGroup', {
-      filter: `id eq ${id}`
-    })
+  async getProductGroupById(id: number): Promise<ProductGroup | null> {
+    const { value: groupResponse } = await this.apiClient.call(
+      '/VBN/ProductGroup',
+      {
+        filter: `id eq ${id}`,
+      },
+    );
     if (groupResponse.length === 1) {
-      const group = groupResponse[0]
+      const group = groupResponse[0];
       return new ProductGroup(
         group.id,
         group.description,
         group.entry_date,
         group.change_date_time,
-        group.expiry_date
-      )
+        group.expiry_date,
+      );
     }
-    return null
+    return null;
   }
-}
+};
