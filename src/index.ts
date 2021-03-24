@@ -3,7 +3,7 @@ import Product from './models/product.class';
 import ProductGroup from './models/productGroup.class';
 
 export class FloriClient {
-  private apiClient: ApiClient;
+  private readonly apiClient: ApiClient;
 
   constructor(clientId: string, clientSecret: string) {
     ApiClient.clientId = clientId;

@@ -14,7 +14,7 @@ export default class Product {
   changeDateTitme: Date;
   expiryDate: Date;
 
-  apiClient: ApiClient;
+  private readonly apiClient: ApiClient;
 
   constructor(
     id: number,

@@ -7,7 +7,7 @@ export default class ProductGroup {
   changeDateTime: Date;
   expiryDate: Date;
 
-  private apiClient: ApiClient;
+  private readonly apiClient: ApiClient;
 
   constructor(
     id: number,
