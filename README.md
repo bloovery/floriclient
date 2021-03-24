@@ -33,6 +33,10 @@ const product = await client.getProductById(20453)
 Latest update
 =============
 
+## [0.6.0] - 2021-03-24
+- Added `getProducts` method
+- Removed some unused properties
+
 ## [0.5.1] - 2021-03-24
 - Added build types and references
 
