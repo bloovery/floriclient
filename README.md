@@ -33,6 +33,9 @@ const product = await client.getProductById(20453)
 Latest update
 =============
 
+## [0.5.1] - 2021-03-24
+- Added build types and references
+
 ## [0.5.0] - 2021-03-24
 - Added `eslint` and `prettier`
 - Updated code based on linter rules
