@@ -5,8 +5,11 @@
   "main": "dist/index.js",
   "types": "dist/index.d.types",
   "author": "Bloovery srl <tech@bloovery.com>",
-  "license": "UNLICENSED",
-  "repository": "git://github.com/bloovery/floriclient.git",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bloovery/floriclient.git"
+  },
   "scripts": {
     "dev": "tsc -w",
     "build": "tsc"
@@ -22,5 +25,15 @@
     "axios": "^0.21.0",
     "lodash": "^4.17.20",
     "moment": "^2.29.1"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/bloovery/floriclient/issues"
+  },
+  "homepage": "https://github.com/bloovery/floriclient#readme",
+  "keywords": [
+    "floricode",
+    "api",
+    "client",
+    "flowertech"
+  ]
 }
