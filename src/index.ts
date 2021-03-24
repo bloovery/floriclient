@@ -2,17 +2,10 @@ import ApiClient from './api.class';
 import Product from './models/product.class';
 import ProductGroup from './models/productGroup.class';
 
-export = class FloriClient {
-  clientId: string;
-  clientSecret: string;
-  apiUrl: string;
-  apiVersion: string;
-  apiClient: ApiClient;
+export class FloriClient {
+  private apiClient: ApiClient;
 
   constructor(clientId: string, clientSecret: string) {
-    this.clientId = clientId;
-    this.clientSecret = clientSecret;
-
     ApiClient.clientId = clientId;
     ApiClient.clientSecret = clientSecret;
     this.apiClient = ApiClient.getInstance();
