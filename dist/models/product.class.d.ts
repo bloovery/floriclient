@@ -17,3 +17,4 @@ export default class Product {
     getTranslation(languageCode: string): Promise<string>;
     getGroup(): Promise<ProductGroup>;
 }
+//# sourceMappingURL=product.class.d.ts.map

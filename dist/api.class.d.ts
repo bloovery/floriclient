@@ -16,3 +16,4 @@ export default class ApiClient {
     call(path: string, parameters?: RequestParameters): Promise<any>;
     private loginAction;
 }
+//# sourceMappingURL=api.class.d.ts.map

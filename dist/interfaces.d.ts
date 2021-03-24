@@ -6,3 +6,4 @@ export interface RequestParameters {
     skip?: number;
     count?: number;
 }
+//# sourceMappingURL=interfaces.d.ts.map
