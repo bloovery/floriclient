@@ -1,4 +1,4 @@
-import ApiClient from '../api.class'
+import ApiClient from '../api.class';
 
 export default class ProductGroup {
   id: number;
@@ -7,14 +7,14 @@ export default class ProductGroup {
   changeDateTime: Date;
   expiryDate: Date;
 
-  private apiClient: ApiClient
+  private apiClient: ApiClient;
 
-  constructor (
+  constructor(
     id: number,
     description: string,
     entryDate: Date,
     changeDateTime: Date,
-    expiryDate: Date
+    expiryDate: Date,
   ) {
     this.id = id;
     this.description = description;
@@ -22,16 +22,16 @@ export default class ProductGroup {
     this.changeDateTime = changeDateTime;
     this.expiryDate = expiryDate;
 
-    this.apiClient = ApiClient.getInstance()
+    this.apiClient = ApiClient.getInstance();
   }
 
-  async getTranslation (languageCode: string): Promise<string> {
+  async getTranslation(languageCode: string): Promise<string> {
     const { value: nameResponse } = await this.apiClient.call('/VBN/Name', {
-      filter: `involved_code_list_id eq 16 and language_id eq '${languageCode}' and code_list_item_id eq '${this.id}'`
-    })
+      filter: `involved_code_list_id eq 16 and language_id eq '${languageCode}' and code_list_item_id eq '${this.id}'`,
+    });
     if (nameResponse.length === 1) {
-      return nameResponse[0].name_or_translation
+      return nameResponse[0].name_or_translation;
     }
-    return null
+    return null;
   }
 }
