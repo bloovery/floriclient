@@ -46,7 +46,7 @@ export default class ApiClient {
   public async call(
     path: string,
     parameters?: RequestParameters,
-  ): Promise<unknown> {
+  ): Promise<any> {
     let params = {};
     if (parameters) {
       const { filter, select, top, skip, count } = parameters;

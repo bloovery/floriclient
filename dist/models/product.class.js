@@ -31,7 +31,7 @@ class Product {
     getTranslation(languageCode) {
         return __awaiter(this, void 0, void 0, function* () {
             const { value: nameResponse } = yield this.apiClient.call('/VBN/Name', {
-                filter: `name_type_id eq 1 and involved_code_list_id eq 1 and language_id eq '${languageCode}' and code_list_item_id eq '${this.id}'`
+                filter: `name_type_id eq 1 and involved_code_list_id eq 1 and language_id eq '${languageCode}' and code_list_item_id eq '${this.id}'`,
             });
             if (nameResponse.length === 1) {
                 return nameResponse[0].name_or_translation;
@@ -42,7 +42,7 @@ class Product {
     getGroup() {
         return __awaiter(this, void 0, void 0, function* () {
             const { value: groupResponse } = yield this.apiClient.call('/VBN/ProductGroup', {
-                filter: `id eq ${this.productGroupId}`
+                filter: `id eq ${this.productGroupId}`,
             });
             if (groupResponse.length === 1) {
                 const group = groupResponse[0];

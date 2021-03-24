@@ -25,7 +25,7 @@ module.exports = class FloriClient {
     getProductById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const { value: productResponse } = yield this.apiClient.call('/VBN/Product', {
-                filter: `id eq ${id}`
+                filter: `id eq ${id}`,
             });
             if (productResponse.length === 1) {
                 const product = productResponse[0];
@@ -37,7 +37,7 @@ module.exports = class FloriClient {
     getProductGroupById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const { value: groupResponse } = yield this.apiClient.call('/VBN/ProductGroup', {
-                filter: `id eq ${id}`
+                filter: `id eq ${id}`,
             });
             if (groupResponse.length === 1) {
                 const group = groupResponse[0];

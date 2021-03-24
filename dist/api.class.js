@@ -23,7 +23,7 @@ class ApiClient {
         this._clientId = clientId;
         this._clientSecret = clientSecret;
         this.client = axios_1.default.create({
-            baseURL: this.apiUrl
+            baseURL: this.apiUrl,
         });
     }
     static getInstance() {
@@ -45,7 +45,7 @@ class ApiClient {
                     $select: select,
                     $top: top,
                     $skip: skip,
-                    $count: count
+                    $count: count,
                 };
             }
             try {
@@ -55,8 +55,8 @@ class ApiClient {
                 const { data } = yield this.client.get(`${this.apiVersion}${path}`, {
                     params,
                     headers: {
-                        Authorization: `Bearer ${this.authBearer}`
-                    }
+                        Authorization: `Bearer ${this.authBearer}`,
+                    },
                 });
                 return data;
             }
@@ -71,12 +71,14 @@ class ApiClient {
                 grant_type: 'client_credentials',
                 client_id: this._clientId,
                 client_secret: this._clientSecret,
-                scope: 'company%3Aread+companylevel%3Aread+companyrole%3Aread+location%3Aread+locationtype%3Aread+certificateorganisation%3Aread+certificatetype%3Aread+issuedcertificate%3Aread+certificatetypetofeaturevalue%3Aread'
+                scope: 'company%3Aread+companylevel%3Aread+companyrole%3Aread+location%3Aread+locationtype%3Aread+certificateorganisation%3Aread+certificatetype%3Aread+issuedcertificate%3Aread+certificatetypetofeaturevalue%3Aread',
             };
-            const loginEncodedData = Object.keys(loginData).map(key => key + '=' + lodash_1.get(loginData, key)).join('&');
+            const loginEncodedData = Object.keys(loginData)
+                .map((key) => key + '=' + lodash_1.get(loginData, key))
+                .join('&');
             try {
-                const { data: { access_token, expires_in } } = yield this.client.post('/oauth/token', loginEncodedData, {
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                const { data: { access_token, expires_in }, } = yield this.client.post('/oauth/token', loginEncodedData, {
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 });
                 this.loginExpiresAt = moment_1.default().add(expires_in, 'seconds');
                 this.authBearer = access_token;

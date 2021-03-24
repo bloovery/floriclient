@@ -9,7 +9,7 @@ declare const _default: {
         apiVersion: string;
         apiClient: ApiClient;
         getProductById(id: number): Promise<Product>;
-        getProductGroupById(id: number): Promise<ProductGroup>;
+        getProductGroupById(id: number): Promise<ProductGroup | null>;
     };
 };
 export = _default;
