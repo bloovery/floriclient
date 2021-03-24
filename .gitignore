@@ -1,6 +1,10 @@
+# IDE
 .idea
 .vscode
+.history
 
+# CODE
 node_modules
 
+# OS
 .DS_Store
