@@ -18,6 +18,32 @@ export = class FloriClient {
     this.apiClient = ApiClient.getInstance();
   }
 
+  async getProducts(skip?: number): Promise<Product[] | null> {
+    const { value: productResponse } = await this.apiClient.call(
+      '/VBN/Product',
+      {
+        skip,
+      },
+    );
+    if (productResponse.length > 0) {
+      return productResponse.map((product: any) => {
+        return new Product(
+          product.id,
+          product.name,
+          product.short_name,
+          product.plant_registrator_id,
+          product.plant_taxonomic_number,
+          product.composite_indicator,
+          product.product_group_id,
+          product.entry_date,
+          product.change_date_time,
+          product.expiry_date,
+        );
+      });
+    }
+    return null;
+  }
+
   async getProductById(id: number): Promise<Product> {
     const { value: productResponse } = await this.apiClient.call(
       '/VBN/Product',
