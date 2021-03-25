@@ -16,6 +16,7 @@ exports.FloriClient = void 0;
 const api_class_1 = __importDefault(require("./api.class"));
 const product_class_1 = __importDefault(require("./models/product.class"));
 const productGroup_class_1 = __importDefault(require("./models/productGroup.class"));
+const name_class_1 = __importDefault(require("./models/name.class"));
 class FloriClient {
     constructor(clientId, clientSecret) {
         api_class_1.default.clientId = clientId;
@@ -35,6 +36,19 @@ class FloriClient {
             return null;
         });
     }
+    getProductsTranslated(languageCode) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { value: nameResponse } = yield this.apiClient.call('/VBN/Name', {
+                filter: `name_type_id eq 1 and involved_code_list_id eq 1 and language_id eq '${languageCode}'`,
+            });
+            if (nameResponse.length > 0) {
+                return nameResponse.map((item) => {
+                    return new name_class_1.default(item.entry_date, item.involved_code_list_id, Number(item.code_list_item_id), Number(item.name_type_id), item.language_id, item.name_or_translation, item.change_date_time, item.expiry_date, item.second_code_list_item_id);
+                });
+            }
+            return null;
+        });
+    }
     getProductById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const { value: productResponse } = yield this.apiClient.call('/VBN/Product', {
@@ -43,6 +57,19 @@ class FloriClient {
             if (productResponse.length === 1) {
                 const product = productResponse[0];
                 return new product_class_1.default(product.id, product.name, product.short_name, product.plant_registrator_id, product.plant_taxonomic_number, product.composite_indicator, product.product_group_id, product.entry_date, product.change_date_time, product.expiry_date);
+            }
+            return null;
+        });
+    }
+    getProductGroupsTranslated(languageCode) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { value: nameResponse } = yield this.apiClient.call('/VBN/Name', {
+                filter: `involved_code_list_id eq 16 and language_id eq '${languageCode}'`,
+            });
+            if (nameResponse.length > 0) {
+                return nameResponse.map((item) => {
+                    return new name_class_1.default(item.entry_date, item.involved_code_list_id, Number(item.code_list_item_id), Number(item.name_type_id), item.language_id, item.name_or_translation, item.change_date_time, item.expiry_date, item.second_code_list_item_id);
+                });
             }
             return null;
         });
@@ -61,4 +88,3 @@ class FloriClient {
     }
 }
 exports.FloriClient = FloriClient;
-;
