@@ -12,11 +12,12 @@ export class FloriClient {
     this.apiClient = ApiClient.getInstance();
   }
 
-  async getProducts(skip?: number): Promise<Product[] | null> {
+  async getProducts(top = 100, skip?: number): Promise<Product[] | null> {
     const { value: productResponse } = await this.apiClient.call(
       '/VBN/Product',
       {
         skip,
+        top,
       },
     );
     if (productResponse.length > 0) {
