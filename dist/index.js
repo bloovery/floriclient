@@ -23,10 +23,11 @@ class FloriClient {
         api_class_1.default.clientSecret = clientSecret;
         this.apiClient = api_class_1.default.getInstance();
     }
-    getProducts(skip) {
+    getProducts(top = 100, skip) {
         return __awaiter(this, void 0, void 0, function* () {
             const { value: productResponse } = yield this.apiClient.call('/VBN/Product', {
                 skip,
+                top,
             });
             if (productResponse.length > 0) {
                 return productResponse.map((product) => {
