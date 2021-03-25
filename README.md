@@ -32,10 +32,12 @@ const product = await client.getProductById(20453)
 
 [Changelog](CHANGELOG.md)
 =============
-
-## [0.7.0] - 2021-03-25
+### [0.7.1] - 2021-03-25
+- Added `top` to limit `getProducts` results
+- Exposed `apiClient` to call directly the API's
+### [0.7.0] - 2021-03-25
 - Added `Name` class
 - Added `getProductsTranslated` and `getProductGroupsTranslated` methods
-## [0.6.1] - 2021-03-24
+### [0.6.1] - 2021-03-24
 - Added `getProducts` method
 - Removed some unused properties
